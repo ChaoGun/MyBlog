@@ -51,7 +51,7 @@
 <body>
 
 	<div class="box">
-		<button id="start">start</button>
+		<button id="start">开始</button>
 		<ul id="nums"></ul>
 	</div>
 
@@ -77,8 +77,8 @@
 		for(let i=0;i<2;i++){
 			randomNumFn(12, afterNum)
 		}
-		str1 = beforeNum.sort(function(a, b){return a - b}).join('--')
-		str2 = afterNum.sort(function(a, b){return a - b}).join('--')
+		str1 = beforeNum.sort(function(a, b){return a - b}).join('，')
+		str2 = afterNum.sort(function(a, b){return a - b}).join('，')
 		span1.innerHTML = str1
 		span2.innerHTML = str2
 		li.appendChild(span1)
