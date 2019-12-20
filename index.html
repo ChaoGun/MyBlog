@@ -52,21 +52,39 @@
 
 	<div class="box">
 		<button id="start">开始</button>
+		<button id="clear">重置</button>
 		<ul id="nums"></ul>
 	</div>
 
 </body>
 <script type="text/javascript">
-	let oneUl = document.getElementById('nums');
-	let onebtn = document.getElementById('start');
-
+	let oneUl = document.getElementById('nums'),
+	    onebtn = document.getElementById('start'),
+	    oneClear = document.getElementById('clear'),
+	    timer = null,
+	    time = null;
+	
+	// 开始生产随机数
 	onebtn.onclick = function(){
-		let timer = setInterval(()=>{
+		timer = setInterval(()=>{
 			opertoin()
 		}, 500)
-		setTimeout(()=>{
+		time = setTimeout(()=>{
 			clearInterval(timer)
 		},5300)
+	}
+	
+	// 重置随机数
+	oneClear.onclick = function(){
+		clearInterval(timer)
+		clearTimeout(time)
+
+		let childs = oneUl.childNodes,	// 获取ul中的li节点
+			len = childs.length-1;
+		
+		for(let i=len;i>=0;i--){	
+			oneUl.removeChild(childs[i])	// 移出生成的li
+		}
 	}
 	
 	function opertoin() {
