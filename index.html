@@ -61,6 +61,15 @@
 	let onebtn = document.getElementById('start');
 
 	onebtn.onclick = function(){
+		let timer = setInterval(()=>{
+			opertoin()
+		}, 500)
+		setTimeout(()=>{
+			clearInterval(timer)
+		},5000)
+	}
+	
+	function opertoin() {
 		let li = document.createElement('li');
 		let span1 = document.createElement('span');
 		let span2 = document.createElement('span');
@@ -85,7 +94,6 @@
 		li.appendChild(span2)
 		oneUl.appendChild(li)
 	}
-	
 
 	function randomNumFn(num, arr){
 		let randomNum = Math.ceil(Math.random()*num)
