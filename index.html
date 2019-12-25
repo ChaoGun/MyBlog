@@ -69,6 +69,7 @@
 	
 	// 开始生产随机数
 	onebtn.onclick = function(){
+		clearList()
 		timer = setInterval(()=>{
 			opertoin()
 		}, 500)
@@ -79,6 +80,10 @@
 	
 	// 重置随机数
 	oneClear.onclick = function(){
+		clearList()
+	}
+	
+	function clearList(){
 		clearInterval(timer)
 		clearTimeout(time)
 
