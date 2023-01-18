@@ -21,6 +21,17 @@
     .city img {
       width: 100%;
     }
+    #sound-effect {
+      width: 100%;
+      text-align: center;
+      font-size: 72px;
+      color: #fff;
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
 
     #ten {
       width: 100%;
@@ -160,29 +171,33 @@
 
 <body>
   <canvas id='cas' style="background-color:rgba(0,5,24,1)">浏览器不支持canvas</canvas>
-  <div class="city"><img src="./yan/city.png" alt="" /></div>
-  <img src="./yan/moon.png" alt="" id="moon" style="visibility: hidden;" />
+  <div class="city"><img src="./static/city.png" alt="" /></div>
+  <img src="./static/moon.png" alt="" id="moon" style="visibility: hidden;" />
+  <div id="sound-effect">
+    <p>点击屏幕开启音效</p>
+  </div>
   <div style="display:none">
     <div class="shape">雪宝，新年快乐</div>
-    <div class="shape">爱你哟~</div>
+    <div class="shape">我来给你拜年啦</div>
     <div class="shape">暴富</div>
     <div class="shape">变美</div>
     <div class="shape">快乐</div>
     <div class="shape">好运</div>
+    <div class="shape">爱你哟~</div>
   </div>
   <div id="ten">
     <p>请雪宝点击10下屏幕</p>
     <p id="clickNums">0</p>
   </div>
   <p id="cards-title">
-    <img src="./yan/surprise.gif" />
+    <img src="./static/surprise.gif" />
   </p>
-  <img id="close" src="./yan/close.png" />
+  <img id="close" src="./static/close.png" />
   <p id="hint" text="雪宝，以下红包三选一噢">雪宝，以下红包三选一噢</p>
   <div class="hidden-cards">
     <div class="cards">
       <div class="card">
-        <img src="./yan/ym.jpg" />
+        <img src="./static/ym.jpg" />
         <div class="text">
           <h1>恭喜你中奖啦!</h1>
           <p class="text-p">获得，<span>手写签名照一副!</span></p>
@@ -190,7 +205,7 @@
         </div>
       </div>
       <div class="card">
-        <img src="./yan/ym.jpg" />
+        <img src="./static/ym.jpg" />
         <div class="text">
           <h1>恭喜你中奖啦!</h1>
           <p class="text-p">获得，<span>手折玫瑰一朵!</span></p>
@@ -198,7 +213,7 @@
         </div>
       </div>
       <div class="card">
-        <img src="./yan/ym.jpg" />
+        <img src="./static/ym.jpg" />
         <div class="text">
           <h1>恭喜你中奖啦!</h1>
           <p class="text-p">获得，<span>手绘图一张!</span></p>
@@ -207,14 +222,15 @@
       </div>
     </div>
   </div>
-  <audio src="./yan/boom1.mp3" preload="auto" autoplay></audio>
-  <audio src="./yan/boom2.mp3" preload="auto" autoplay></audio>
-  <audio src="./yan/boom3.mp3" preload="auto" autoplay></audio>
-  <audio src="./yan/boom1.mp3" preload="auto" autoplay></audio>
-  <audio src="./yan/boom2.mp3" preload="auto" autoplay></audio>
-  <audio src="./yan/boom3.mp3" preload="auto" autoplay></audio>
-  <audio src="./yan/shotfire1.mp3" preload="auto" autoplay></audio>
-  <audio src="./yan/shotfire2.mp3" preload="auto" autoplay></audio>
+  <audio src="./static/boom1.mp3" preload="auto" autoplay></audio>
+  <audio src="./static/boom2.mp3" preload="auto" autoplay></audio>
+  <audio src="./static/boom3.mp3" preload="auto" autoplay></audio>
+  <audio src="./static/boom1.mp3" preload="auto" autoplay></audio>
+  <audio src="./static/boom2.mp3" preload="auto" autoplay></audio>
+  <audio src="./static/boom3.mp3" preload="auto" autoplay></audio>
+  <audio src="./static/shotfire1.mp3" preload="auto" autoplay></audio>
+  <audio src="./static/shotfire2.mp3" preload="auto" autoplay></audio>
+  <audio src="./static/zhufuyu.m4a" preload="auto" autoplay id="zhufuyu"></audio>
   <script>
     var canvas = document.getElementById("cas");
     var ocas = document.createElement("canvas");
@@ -225,11 +241,13 @@
     var bigbooms = [];
     let isStart = false;  // 是否可以开始点击屏幕计数
     let isCardClicked = false;  // 是否选择过奖励
+    const soundEffect = document.getElementById('sound-effect');
     const ten = document.getElementById('ten');
     const clickNums = document.getElementById('clickNums');
     const close = document.getElementById('close');
     const cardsTitle = document.getElementById('cards-title');
     const hint = document.getElementById('hint');
+    const zhufuyu = document.getElementById('zhufuyu');
     const hidden_cards = document.querySelector(".hidden-cards");
 
     window.onload = function () {
@@ -271,12 +289,13 @@
             bigbooms.push(bigboom)
           }, 3000 * j);
         }
+        zhufuyu.play();
       }, 13000)
 
       setTimeout(() => {
         ten.style.display = 'block'
         isStart = true
-      }, 35000)
+      }, 36000)
     }
 
     var lastTime;
@@ -387,7 +406,8 @@
       var y = event.clientY;
       var bigboom = new Boom(getRandom(canvas.width / 3, canvas.width * 2 / 3), 2, "#FFF", { x: x, y: y });
       bigbooms.push(bigboom)
-      
+      soundEffect.style.display = 'none'
+
       if (!isStart) return;
       counter_num++
       clickNums.innerHTML = counter_num - 1
