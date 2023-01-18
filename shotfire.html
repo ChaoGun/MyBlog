@@ -223,7 +223,8 @@
     ocas.width = canvas.width = window.innerWidth;
     ocas.height = canvas.height = window.innerHeight;
     var bigbooms = [];
-    let isCardClicked = false;
+    let isStart = false;  // 是否可以开始点击屏幕计数
+    let isCardClicked = false;  // 是否选择过奖励
     const ten = document.getElementById('ten');
     const clickNums = document.getElementById('clickNums');
     const close = document.getElementById('close');
@@ -274,6 +275,7 @@
 
       setTimeout(() => {
         ten.style.display = 'block'
+        isStart = true
       }, 35000)
     }
 
@@ -385,8 +387,10 @@
       var y = event.clientY;
       var bigboom = new Boom(getRandom(canvas.width / 3, canvas.width * 2 / 3), 2, "#FFF", { x: x, y: y });
       bigbooms.push(bigboom)
+      
+      if (!isStart) return;
+      counter_num++
       clickNums.innerHTML = counter_num - 1
-
       if (isCardClicked) {
         hidden_cards.style.display = 'block'
         hint.style.display = 'block'
@@ -407,7 +411,6 @@
           }, 450)
         }, 3000)
       }
-      counter_num++
     }
 
     /**
